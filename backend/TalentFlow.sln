@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{924C6987-6AA3-4FF9-BB69-51178BAE85E0}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CED35C25-53B2-4480-91C0-B857706D7590}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.Application", "src\TalentFlow.Application\TalentFlow.Application.csproj", "{3B5E1139-E6A7-4606-813E-11E25B338DF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.Domain", "src\TalentFlow.Domain\TalentFlow.Domain.csproj", "{1836CE5E-90F0-40D1-A731-AF38E19EE87B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.Infrastructure", "src\TalentFlow.Infrastructure\TalentFlow.Infrastructure.csproj", "{126E97F8-C4BB-4812-B63C-15AA15093924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.API", "src\TalentFlow.API\TalentFlow.API.csproj", "{2B4344C7-D318-4008-953E-D7958CC7B2C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{75516776-A2D9-43CA-89BE-DCCFB0A97D16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.Domain.Tests", "tests\TalentFlow.Domain.Tests\TalentFlow.Domain.Tests.csproj", "{23A34524-B4A9-4621-94B8-55D92654543C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B5E1139-E6A7-4606-813E-11E25B338DF5} = {CED35C25-53B2-4480-91C0-B857706D7590}
+		{1836CE5E-90F0-40D1-A731-AF38E19EE87B} = {CED35C25-53B2-4480-91C0-B857706D7590}
+		{126E97F8-C4BB-4812-B63C-15AA15093924} = {CED35C25-53B2-4480-91C0-B857706D7590}
+		{2B4344C7-D318-4008-953E-D7958CC7B2C4} = {CED35C25-53B2-4480-91C0-B857706D7590}
+		{23A34524-B4A9-4621-94B8-55D92654543C} = {75516776-A2D9-43CA-89BE-DCCFB0A97D16}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B5E1139-E6A7-4606-813E-11E25B338DF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5E1139-E6A7-4606-813E-11E25B338DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5E1139-E6A7-4606-813E-11E25B338DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5E1139-E6A7-4606-813E-11E25B338DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1836CE5E-90F0-40D1-A731-AF38E19EE87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1836CE5E-90F0-40D1-A731-AF38E19EE87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1836CE5E-90F0-40D1-A731-AF38E19EE87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1836CE5E-90F0-40D1-A731-AF38E19EE87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126E97F8-C4BB-4812-B63C-15AA15093924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126E97F8-C4BB-4812-B63C-15AA15093924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126E97F8-C4BB-4812-B63C-15AA15093924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126E97F8-C4BB-4812-B63C-15AA15093924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B4344C7-D318-4008-953E-D7958CC7B2C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4344C7-D318-4008-953E-D7958CC7B2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4344C7-D318-4008-953E-D7958CC7B2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4344C7-D318-4008-953E-D7958CC7B2C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A34524-B4A9-4621-94B8-55D92654543C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A34524-B4A9-4621-94B8-55D92654543C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A34524-B4A9-4621-94B8-55D92654543C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A34524-B4A9-4621-94B8-55D92654543C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

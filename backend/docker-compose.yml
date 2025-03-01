@@ -1,0 +1,23 @@
+﻿version: '3.9'
+
+networks:
+  talentflow-net:
+
+services:
+  TalentFlow.database:
+    container_name: talentflow.database
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: MyStrong!Pass123
+      MSSQL_PID: Developer
+    volumes:
+      - talentflow-mssql:/var/opt/mssql
+    ports:
+      - 1433:1433
+    networks:
+      - talentflow-net
+
+volumes:
+  talentflow-mssql:
