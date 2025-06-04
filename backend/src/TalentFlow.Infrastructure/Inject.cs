@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
 using TalentFlow.Application.Abstractions.Repositories;
 using TalentFlow.Infrastructure.Common;
@@ -19,7 +20,10 @@ public static class Inject
             options
                 .UseSqlServer(connectionString)
                 .UseSnakeCaseNamingConvention());
-
+        
+        services.AddScoped<IDbConnectionFactory>(_ =>
+            new DbConnectionFactory(connectionString));
+ 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();

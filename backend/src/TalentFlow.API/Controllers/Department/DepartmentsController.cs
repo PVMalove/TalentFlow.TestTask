@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TalentFlow.API.Controllers.Department.Request;
 using TalentFlow.API.Extensions;
+using TalentFlow.Application.Queries.GetVacancies;
 
 namespace TalentFlow.API.Controllers.Department;
 
