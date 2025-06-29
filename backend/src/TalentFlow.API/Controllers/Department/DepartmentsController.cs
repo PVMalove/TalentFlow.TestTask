@@ -1,9 +1,11 @@
 ﻿using Asp.Versioning;
+using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TalentFlow.API.Controllers.Department.Request;
 using TalentFlow.API.Extensions;
-using TalentFlow.Application.Queries.GetVacancies;
+using TalentFlow.Domain.DTO.Department;
+using TalentFlow.Domain.Shared;
 
 namespace TalentFlow.API.Controllers.Department;
 
@@ -20,6 +22,19 @@ public class DepartmentsController(IMediator mediator) : ApplicationController
         if (result.IsFailure)
             return result.Error.ToResponse();
 
-        return Ok(result.Value);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateDepartment(
+        [FromBody] CreateDepartmentRequest request,
+        CancellationToken cancellationToken)
+    {
+        var command = request.ToCommand();
+        var result = await mediator.Send(command, cancellationToken);
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+
+        return Ok(result);
     }
 }

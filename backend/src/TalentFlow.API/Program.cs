@@ -1,11 +1,14 @@
 using Asp.Versioning.ApiExplorer;
+using TalentFlow.API;
 using TalentFlow.API.Extensions;
+using TalentFlow.API.Extensions.Endpoints;
 using TalentFlow.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 services.AddCustomServices(builder);
+services.AddEndpoints(AssemblyReference.Assembly);
 
 var app = builder.Build();
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -27,5 +30,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(x=> x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.MapControllers();
+app.MapEndpoints();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.Run();

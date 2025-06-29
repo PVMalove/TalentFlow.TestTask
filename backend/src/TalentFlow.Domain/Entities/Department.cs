@@ -1,15 +1,20 @@
 ﻿using CSharpFunctionalExtensions;
+using TalentFlow.Domain.DomainError;
+using TalentFlow.Domain.DomainError.Departments;
+using TalentFlow.Domain.Models.ValueObjects.EntityIds;
 using TalentFlow.Domain.Shared;
-using TalentFlow.Domain.ValueObjects.EntityIds;
 
-namespace TalentFlow.Domain.Entities;
+
+namespace TalentFlow.Domain.Models.Entities;
 
 public class Department : Shared.Entity<DepartmentId>
 {
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
 
-    protected Department(DepartmentId id) : base(id) { }
+    protected Department(DepartmentId id) : base(id)
+    {
+    }
 
     private Department(DepartmentId id, string name, string description) : base(id)
     {
@@ -17,19 +22,24 @@ public class Department : Shared.Entity<DepartmentId>
         Description = description;
     }
 
-    public static Result<Department, Error> Create(DepartmentId id, string name, string description)
+    public static Result<Department, ErrorList> Create(DepartmentId id, string name, string description)
     {
+        var errors = new List<Error>();
+
         if (string.IsNullOrWhiteSpace(name))
-            return Errors.General.ValueIsInvalid("Name can not be empty");
+            errors.Add(DepartmentsErrors.InvalidNameEmpty(nameof(name)));
 
         if (string.IsNullOrWhiteSpace(description))
-            return Errors.General.ValueIsInvalid("Description can not be empty");
-        
-        if (name.Length > Constants.MAX_LOW_TEXT_LENGTH_50)
-            return Errors.General.ValueIsRequired("Department.Name", name.Length);
+            errors.Add(DepartmentsErrors.InvalidDescriptionEmpty(nameof(description)));
 
+        if (name.Length > Constants.MAX_LOW_TEXT_LENGTH_50)
+            errors.Add(DomainErrors.ValueIsLengthInvalid(nameof(name), Constants.MAX_LOW_TEXT_LENGTH_50, name.Length));
+        
         if (description.Length > Constants.MAX_HIGH_TEXT_LENGTH_2000)
-            return Errors.General.ValueIsRequired("Department.Description", description.Length);
+            errors.Add(DomainErrors.ValueIsLengthInvalid(nameof(description), Constants.MAX_LOW_TEXT_LENGTH_50, name.Length));
+
+        if (errors.Count > 0)
+            return new ErrorList(errors);
 
         return new Department(id, name, description);
     }

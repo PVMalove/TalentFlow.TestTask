@@ -1,8 +1,10 @@
 ﻿using Asp.Versioning;
+using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TalentFlow.API.Controllers.HrSpecialists.Request;
 using TalentFlow.API.Extensions;
+using TalentFlow.Domain.Shared;
 
 namespace TalentFlow.API.Controllers.HrSpecialists;
 
