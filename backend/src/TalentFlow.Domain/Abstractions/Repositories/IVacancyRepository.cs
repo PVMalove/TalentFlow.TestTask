@@ -1,9 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
-using TalentFlow.Domain.Entities;
+using TalentFlow.Application.Specifications;
+using TalentFlow.Domain.Models.Entities;
+using TalentFlow.Domain.Models.ValueObjects.EntityIds;
 using TalentFlow.Domain.Shared;
-using TalentFlow.Domain.ValueObjects.EntityIds;
 
-namespace TalentFlow.Domain.Abstractions.Repositories;
+namespace TalentFlow.Application.Abstractions.Repositories;
 
 public interface IVacancyRepository
 {
@@ -14,5 +15,9 @@ public interface IVacancyRepository
     Guid Delete(Vacancy vacancy);
 
     Task<Result<Vacancy, Error>> GetById(VacancyId vacancyId,
+        CancellationToken cancellationToken = default);
+
+    Task<Vacancy?> SingleOrDefaultWithSpecificationAsync(
+        ISpecification<Vacancy> specification,
         CancellationToken cancellationToken = default);
 }

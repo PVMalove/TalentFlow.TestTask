@@ -11,7 +11,7 @@ public static class AppExtensions
         try
         {
             await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            await dbContext.Database.MigrateAsync();
+            //await dbContext.Database.MigrateAsync();
             Console.WriteLine($"Initializing database: {dbContext.Database.ProviderName}");
         }
         catch (Exception ex)

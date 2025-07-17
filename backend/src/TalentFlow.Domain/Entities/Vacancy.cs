@@ -14,7 +14,8 @@ public class Vacancy : Shared.Entity<VacancyId>
     public HrSpecialistId HrSpecialistId { get; init; }
     public DateTime OpeningDate { get; } = DateTime.UtcNow;
     public DateTime? ClosingDate { get; private set; }
-
+    public Department Department { get; init; } = null!;
+    
     protected Vacancy(VacancyId id) : base(id) { }
 
     private Vacancy(VacancyId id, DepartmentId departmentId, HrSpecialistId hrSpecialistId,

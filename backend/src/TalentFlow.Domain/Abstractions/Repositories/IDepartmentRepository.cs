@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using TalentFlow.Application.Specifications;
 using TalentFlow.Domain.DTO.Department;
 using TalentFlow.Domain.Entities;
 using TalentFlow.Domain.Shared;
@@ -19,4 +20,8 @@ public interface IDepartmentRepository
 
     public Task<Result<IReadOnlyList<DepartmentGetDto>, Error>> GetAllSorted(string? sortBy,
         string? sortDirection, CancellationToken cancellationToken);
+
+    Task<Department?> SingleOrDefaultWithSpecificationAsync(
+        ISpecification<Department> specification,
+        CancellationToken cancellationToken = default);
 }

@@ -2,14 +2,15 @@
 using FluentValidation;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
+using TalentFlow.Application.Abstractions.Repositories;
+using TalentFlow.Application.Specifications;
 using TalentFlow.Application.Validation;
-using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.DTO.RecruitmentProcess;
-using TalentFlow.Domain.Entities;
-using TalentFlow.Domain.Enums;
+using TalentFlow.Domain.Models.Entities;
+using TalentFlow.Domain.Models.Enum;
+using TalentFlow.Domain.Models.ValueObjects;
+using TalentFlow.Domain.Models.ValueObjects.EntityIds;
 using TalentFlow.Domain.Shared;
-using TalentFlow.Domain.ValueObjects;
-using TalentFlow.Domain.ValueObjects.EntityIds;
 
 
 namespace TalentFlow.Application.Commands.CreateRecruitmentProcess;
@@ -29,6 +30,12 @@ public class CreateRecruitmentProcessCommandHandler(
         var validateResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validateResult.IsValid)
             return validateResult.ToList();
+        
+        // ISpecification<Vacancy> vacancySpecification = new Specification<Vacancy>()
+        //     .Include(v => v.Department)
+        //     .Where(v => v.Id == command.VacancyId);
+        //
+        // var result2 = await vacancyRepository.SingleOrDefaultWithSpecificationAsync(vacancySpecification, cancellationToken); 
         
         var vacancyResult = await vacancyRepository.GetById(command.VacancyId, cancellationToken);
         if (vacancyResult.IsFailure)
