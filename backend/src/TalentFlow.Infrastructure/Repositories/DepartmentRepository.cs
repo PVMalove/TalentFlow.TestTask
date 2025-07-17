@@ -2,6 +2,7 @@
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using TalentFlow.Application.Abstractions.Repositories;
+using TalentFlow.Application.Specifications;
 using TalentFlow.Domain.DTO.Department;
 using TalentFlow.Domain.Models.Entities;
 using TalentFlow.Domain.Models.ValueObjects.EntityIds;
@@ -74,9 +75,32 @@ public class DepartmentRepository(ApplicationDbContext context) : IDepartmentRep
         Expression<Func<Department, object>> keySelector = sortBy?.ToLower() switch
         {
             "name" => department => department.Name,
-            "description" => department => department.Description,
-            _ => department => department.Id
+            "description" => department => department.Description
+            //_ => department => department.Id
         };
         return keySelector;
+    }
+    
+    public async Task<Department?> SingleOrDefaultWithSpecificationAsync(
+        ISpecification<Department> specification,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<Department> query = context.Set<Department>().ApplySpecification(specification);
+        return await query.SingleOrDefaultAsync(cancellationToken);
+        
+        // IQueryable<Department> query = context.Set<Department>();
+        //
+        // if (specification.AsNoTracking)
+        // {
+        //     query = query.AsNoTracking();
+        // }
+        //
+        // query = specification.Criteria.Aggregate(query, (current, condition) => 
+        //     current.Where(condition));
+        //
+        // query = specification.Includes.Aggregate(query, (current, include) =>
+        //     current.Include(include));
+        //
+        // return await query.SingleOrDefaultAsync(cancellationToken);
     }
 }

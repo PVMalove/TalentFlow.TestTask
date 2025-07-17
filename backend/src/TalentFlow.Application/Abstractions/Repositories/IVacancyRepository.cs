@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using TalentFlow.Application.Specifications;
 using TalentFlow.Domain.Models.Entities;
 using TalentFlow.Domain.Models.ValueObjects.EntityIds;
 using TalentFlow.Domain.Shared;
@@ -14,5 +15,9 @@ public interface IVacancyRepository
     Guid Delete(Vacancy vacancy);
 
     Task<Result<Vacancy, Error>> GetById(VacancyId vacancyId,
+        CancellationToken cancellationToken = default);
+
+    Task<Vacancy?> SingleOrDefaultWithSpecificationAsync(
+        ISpecification<Vacancy> specification,
         CancellationToken cancellationToken = default);
 }

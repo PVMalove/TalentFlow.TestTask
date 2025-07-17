@@ -3,6 +3,7 @@ using FluentValidation;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
 using TalentFlow.Application.Abstractions.Repositories;
+using TalentFlow.Application.Specifications;
 using TalentFlow.Application.Validation;
 using TalentFlow.Domain.DTO.RecruitmentProcess;
 using TalentFlow.Domain.Models.Entities;
@@ -29,6 +30,12 @@ public class CreateRecruitmentProcessCommandHandler(
         var validateResult = await validator.ValidateAsync(command, cancellationToken);
         if (!validateResult.IsValid)
             return validateResult.ToList();
+        
+        // ISpecification<Vacancy> vacancySpecification = new Specification<Vacancy>()
+        //     .Include(v => v.Department)
+        //     .Where(v => v.Id == command.VacancyId);
+        //
+        // var result2 = await vacancyRepository.SingleOrDefaultWithSpecificationAsync(vacancySpecification, cancellationToken); 
         
         var vacancyResult = await vacancyRepository.GetById(command.VacancyId, cancellationToken);
         if (vacancyResult.IsFailure)

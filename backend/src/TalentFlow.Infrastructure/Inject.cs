@@ -26,6 +26,7 @@ public static class Inject
  
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<ICandidateRepository, CandidateRepository>();
         services.AddScoped<IRecruitmentProcessRepository, RecruitmentProcessRepository>();

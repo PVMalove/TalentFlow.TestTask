@@ -28,5 +28,9 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
             .IsRequired()
             .HasMaxLength(Constants.MAX_HIGH_TEXT_LENGTH_2000)
             .HasColumnName("description");
+        
+        builder.HasMany(d => d.Vacancies)
+            .WithOne(v => v.Department)
+            .HasForeignKey(v => v.DepartmentId);
     }
 }

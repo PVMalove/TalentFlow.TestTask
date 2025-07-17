@@ -20,11 +20,6 @@ public class VacancyConfiguration : IEntityTypeConfiguration<Vacancy>
                 result => VacancyId.Create(result)
             );
 
-        builder.HasOne<Department>()
-            .WithMany()
-            .HasForeignKey(v => v.DepartmentId)
-            .OnDelete(DeleteBehavior.Restrict);
-
         builder.Property(v => v.Status)
             .HasConversion(
                 s => s.ToString(),

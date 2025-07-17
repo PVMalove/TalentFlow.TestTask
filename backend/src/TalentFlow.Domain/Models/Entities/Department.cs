@@ -12,6 +12,8 @@ public class Department : Shared.Entity<DepartmentId>
     public string Name { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
 
+    public IReadOnlyCollection<Vacancy> Vacancies { get; private set; } = new List<Vacancy>();
+    
     protected Department(DepartmentId id) : base(id)
     {
     }
