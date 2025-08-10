@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using TalentFlow.Domain.DomainError;
-using TalentFlow.Domain.Models.ValueObjects;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
-namespace TalentFlow.Domain.Models.Entities;
+namespace TalentFlow.Domain.Entities;
 
 public class Candidate : Shared.Entity<CandidateId>
 {
@@ -24,10 +23,10 @@ public class Candidate : Shared.Entity<CandidateId>
     public static Result<Candidate, Error> Create(CandidateId id, FullName fullName, ContactInfo contactInfo, string resumeUrl)
     {
         if (string.IsNullOrWhiteSpace(fullName.FirstName))
-            return DomainErrors.ValueIsInvalid("fullName.FirstName");
+            return Errors.General.ValueIsInvalid("FirstName can not be empty");
         
         if (string.IsNullOrWhiteSpace(fullName.SecondName))
-            return DomainErrors.ValueIsInvalid("fullName.SecondName");
+            return Errors.General.ValueIsInvalid("SecondName can not be empty");
         
         return new Candidate(id, fullName, contactInfo, resumeUrl);
     }

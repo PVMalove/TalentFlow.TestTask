@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
-using TalentFlow.Application.Abstractions.Repositories;
+using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Infrastructure.Common;
 using TalentFlow.Infrastructure.Repositories;
 
@@ -26,7 +26,7 @@ public static class Inject
  
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        services.AddScoped(typeof(IDefaultRepository<>), typeof(DefaultRepository<,>));
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<ICandidateRepository, CandidateRepository>();
         services.AddScoped<IRecruitmentProcessRepository, RecruitmentProcessRepository>();

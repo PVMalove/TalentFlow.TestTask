@@ -1,11 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using TalentFlow.Application.Abstractions;
-using TalentFlow.Application.Abstractions.Repositories;
-using TalentFlow.Application.Specifications;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Abstractions.Repositories;
+using TalentFlow.Domain.Entities;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 namespace TalentFlow.Infrastructure.Repositories;
 
@@ -39,25 +37,5 @@ public class VacancyRepository(ApplicationDbContext context) : IVacancyRepositor
             return Errors.General.NotFound(vacancyId);
 
         return vacancy;
-    }
-
-    public async Task<Vacancy?> SingleOrDefaultWithSpecificationAsync(
-        ISpecification<Vacancy> specification,
-        CancellationToken cancellationToken = default)
-    {
-        IQueryable<Vacancy> query = context.Set<Vacancy>();
-
-        if (specification.AsNoTracking)
-        {
-            query = query.AsNoTracking();
-        }
-
-        query = specification.Includes.Aggregate(query, (current, include) =>
-            current.Include(include));
-
-        query = specification.Criteria.Aggregate(query, (current, condition) => 
-            current.Where(condition));
-
-        return await query.SingleOrDefaultAsync(cancellationToken);
     }
 }

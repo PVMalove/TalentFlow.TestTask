@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TalentFlow.Application.Abstractions.Repositories;
-using TalentFlow.Domain.Models.Entities;
+using TalentFlow.Domain.Entities;
 
 namespace TalentFlow.Infrastructure;
 
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<Department> Departments { get; set; }
     public DbSet<HrSpecialist> HRSpecialists { get; set; }
