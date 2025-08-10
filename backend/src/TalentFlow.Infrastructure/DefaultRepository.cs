@@ -2,18 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.Abstractions.Specifications;
-using TalentFlow.Domain.Shared;
 using TalentFlow.Infrastructure.Specifications;
-using ComparableValueObject = CSharpFunctionalExtensions.ComparableValueObject;
 
 namespace TalentFlow.Infrastructure
 {
-    public class DefaultRepository<TEntity, TC>(TC context) : IDefaultRepository<TEntity>
-        where TC : DbContext
-        where TEntity : Entity<ComparableValueObject>
+    public class DefaultRepository<TEntity>(DbContext dbContext) : IDefaultRepository<TEntity>
+        where TEntity : class
     {
+        private DbContext context { get; } = dbContext;
+
         private DbSet<TEntity> DbSet => context.Set<TEntity>();
-        
+
         public async Task<bool> AnyAsync(
             Expression<Func<TEntity, bool>> expression,
             CancellationToken cancellationToken = default)
@@ -45,13 +44,13 @@ namespace TalentFlow.Infrastructure
             ArgumentNullException.ThrowIfNull(expression);
             return await DbSet.FirstOrDefaultAsync(expression, cancellationToken);
         }
-                
+
         public async Task<bool> AnyWithSpecificationAsync(
             ISpecification<TEntity> specification,
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(specification);
-        
+
             IQueryable<TEntity> query = DbSet.ApplySpecification(specification);
             return await query.AnyAsync(cancellationToken);
         }
@@ -61,17 +60,17 @@ namespace TalentFlow.Infrastructure
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(specification);
-        
+
             IQueryable<TEntity> query = DbSet.ApplySpecification(specification);
             return await query.CountAsync(cancellationToken);
         }
-        
+
         public async Task<TEntity?> SingleOrDefaultWithSpecificationAsync(
             ISpecification<TEntity> specification,
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(specification);
-            
+
             IQueryable<TEntity>? query = DbSet.ApplySpecification(specification);
             return await query.SingleOrDefaultAsync(cancellationToken);
         }
@@ -81,7 +80,7 @@ namespace TalentFlow.Infrastructure
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(specification);
-            
+
             IQueryable<TEntity>? query = DbSet.ApplySpecification(specification);
             return await query.FirstOrDefaultAsync(cancellationToken);
         }
