@@ -75,8 +75,8 @@ public class DepartmentRepository(ApplicationDbContext context) : IDepartmentRep
         Expression<Func<Department, object>> keySelector = sortBy?.ToLower() switch
         {
             "name" => department => department.Name,
-            "description" => department => department.Description
-            //_ => department => department.Id
+            "description" => department => department.Description,
+            _ => department => department.Id
         };
         return keySelector;
     }
@@ -87,6 +87,7 @@ public class DepartmentRepository(ApplicationDbContext context) : IDepartmentRep
     {
         IQueryable<Department> query = context.Set<Department>().ApplySpecification(specification);
         return await query.SingleOrDefaultAsync(cancellationToken);
+        
         
         // IQueryable<Department> query = context.Set<Department>();
         //
