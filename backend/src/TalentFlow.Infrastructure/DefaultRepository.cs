@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using TalentFlow.Application.Abstractions.Common;
 using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.Abstractions.Specifications;
 using TalentFlow.Domain.Shared;
@@ -10,7 +9,7 @@ using ComparableValueObject = CSharpFunctionalExtensions.ComparableValueObject;
 namespace TalentFlow.Infrastructure
 {
     public class DefaultRepository<TEntity, TC>(TC context) : IDefaultRepository<TEntity>
-        where TC : DbContext, IUnitOfWork
+        where TC : DbContext
         where TEntity : Entity<ComparableValueObject>
     {
         private DbSet<TEntity> DbSet => context.Set<TEntity>();
