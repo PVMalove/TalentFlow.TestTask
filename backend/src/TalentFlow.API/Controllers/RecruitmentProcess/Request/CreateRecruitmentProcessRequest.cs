@@ -1,7 +1,6 @@
 ﻿using TalentFlow.Application.Commands.CreateRecruitmentProcess;
 using TalentFlow.Domain.DTO;
 using TalentFlow.Domain.DTO.TestAssignment;
-using TalentFlow.Domain.Models.Entities;
 
 namespace TalentFlow.API.Controllers.RecruitmentProcess.Request;
 

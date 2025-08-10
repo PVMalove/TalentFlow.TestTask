@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using TalentFlow.Application.Abstractions;
-using TalentFlow.Application.Abstractions.Repositories;
+using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.DTO.Department;
 using TalentFlow.Domain.Shared;
 

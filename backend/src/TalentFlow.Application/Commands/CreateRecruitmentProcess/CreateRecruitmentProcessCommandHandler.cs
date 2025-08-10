@@ -2,14 +2,14 @@
 using FluentValidation;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
-using TalentFlow.Application.Abstractions.Repositories;
 using TalentFlow.Application.Validation;
+using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.DTO.RecruitmentProcess;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.Enum;
-using TalentFlow.Domain.Models.ValueObjects;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Entities;
+using TalentFlow.Domain.Enums;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 
 namespace TalentFlow.Application.Commands.CreateRecruitmentProcess;

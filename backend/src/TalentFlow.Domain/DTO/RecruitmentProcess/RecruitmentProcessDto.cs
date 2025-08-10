@@ -1,5 +1,4 @@
-﻿using TalentFlow.Domain.Models.Enum;
-
+﻿using TalentFlow.Domain.Enums;
 
 namespace TalentFlow.Domain.DTO.RecruitmentProcess;
 

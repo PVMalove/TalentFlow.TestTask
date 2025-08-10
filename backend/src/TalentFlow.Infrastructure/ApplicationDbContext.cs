@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TalentFlow.Domain.Models.Entities;
+using TalentFlow.Domain.Entities;
 
 namespace TalentFlow.Infrastructure;
 

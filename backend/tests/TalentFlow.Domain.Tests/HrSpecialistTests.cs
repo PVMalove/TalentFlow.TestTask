@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.ValueObjects;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Entities;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 using Xunit;
 
 namespace TalentFlow.Domain.Tests;

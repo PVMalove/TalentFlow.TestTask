@@ -1,11 +1,11 @@
 ﻿using System.Linq.Expressions;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using TalentFlow.Application.Abstractions.Repositories;
+using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.DTO.Department;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Entities;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 namespace TalentFlow.Infrastructure.Repositories;
 
