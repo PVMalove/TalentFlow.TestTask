@@ -5,7 +5,7 @@ using ComparableValueObject = CSharpFunctionalExtensions.ComparableValueObject;
 
 namespace TalentFlow.Domain.Abstractions.Repositories
 {
-    public interface IDefaultRepository<TEntity> where TEntity : Entity<ComparableValueObject>
+    public interface IDefaultRepository<TEntity> where TEntity : class
     {
         Task<bool> AnyAsync(
             Expression<Func<TEntity, bool>> expression,

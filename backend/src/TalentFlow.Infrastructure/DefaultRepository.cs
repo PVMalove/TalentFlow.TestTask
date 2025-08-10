@@ -1,20 +1,19 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using TalentFlow.Application.Abstractions.Common;
 using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.Abstractions.Specifications;
-using TalentFlow.Domain.Shared;
 using TalentFlow.Infrastructure.Specifications;
-using ComparableValueObject = CSharpFunctionalExtensions.ComparableValueObject;
 
 namespace TalentFlow.Infrastructure
 {
-    public class DefaultRepository<TEntity, TC>(TC context) : IDefaultRepository<TEntity>
-        where TC : DbContext, IUnitOfWork
-        where TEntity : Entity<ComparableValueObject>
+    public class DefaultRepository<TEntity>(DbContext dbContext) : IDefaultRepository<TEntity>
+        where TEntity : class
     {
+        private DbContext context { get; } = dbContext;
+
         private DbSet<TEntity> DbSet => context.Set<TEntity>();
-        
+
+
         public async Task<bool> AnyAsync(
             Expression<Func<TEntity, bool>> expression,
             CancellationToken cancellationToken = default)

@@ -1,10 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
-using TalentFlow.Application.Abstractions.Repositories;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Abstractions.Repositories;
+using TalentFlow.Domain.Entities;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 namespace TalentFlow.Application.Commands.CreateDepartment;
 
@@ -15,7 +15,7 @@ public class CreateDepartmentHandler(IDepartmentRepository repository, IUnitOfWo
         var departmentId = DepartmentId.NewId();
         var department = Department.Create(departmentId, request.Name, request.Description);
         if (department.IsFailure)
-            return department.Error;
+            return department.Error.ToErrorList();
         
         var result = await repository.Add(department.Value, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
