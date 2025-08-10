@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.Enum;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Entities;
+using TalentFlow.Domain.Enums;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 namespace TalentFlow.Infrastructure.Configuration;
 

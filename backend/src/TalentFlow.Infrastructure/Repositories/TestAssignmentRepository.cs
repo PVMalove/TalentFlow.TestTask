@@ -1,9 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using TalentFlow.Application.Abstractions.Repositories;
-using TalentFlow.Domain.Models.Entities;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Abstractions.Repositories;
+using TalentFlow.Domain.Entities;
 using TalentFlow.Domain.Shared;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 namespace TalentFlow.Infrastructure.Repositories;
 

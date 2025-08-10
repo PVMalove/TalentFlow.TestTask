@@ -1,8 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
-using TalentFlow.Application.Abstractions.Repositories;
-using TalentFlow.Domain.Models.Enum;
+using TalentFlow.Domain.Abstractions.Repositories;
+using TalentFlow.Domain.Enums;
 using TalentFlow.Domain.Shared;
 
 

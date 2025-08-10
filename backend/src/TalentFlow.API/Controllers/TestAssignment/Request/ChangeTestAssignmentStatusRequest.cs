@@ -1,5 +1,5 @@
 ﻿using TalentFlow.Application.Commands.ChangeTestAssignmentStatus;
-using TalentFlow.Domain.Models.Enum;
+using TalentFlow.Domain.Enums;
 
 namespace TalentFlow.API.Controllers.TestAssignment.Request;
 

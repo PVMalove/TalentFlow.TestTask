@@ -1,6 +1,6 @@
 ﻿using TalentFlow.Application.Abstractions;
-using TalentFlow.Domain.Models.Enum;
-using TalentFlow.Domain.Models.ValueObjects.EntityIds;
+using TalentFlow.Domain.Enums;
+using TalentFlow.Domain.ValueObjects.EntityIds;
 
 
 namespace TalentFlow.Application.Commands.ChangeTestAssignmentStatus;

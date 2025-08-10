@@ -2,8 +2,8 @@
 using FluentValidation;
 using TalentFlow.Application.Abstractions;
 using TalentFlow.Application.Abstractions.Common;
-using TalentFlow.Application.Abstractions.Repositories;
 using TalentFlow.Application.Validation;
+using TalentFlow.Domain.Abstractions.Repositories;
 using TalentFlow.Domain.Shared;
 
 namespace TalentFlow.Application.Commands.RemoveVacancyWithHrSpecialist;
