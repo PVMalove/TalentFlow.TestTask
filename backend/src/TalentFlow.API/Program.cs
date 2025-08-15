@@ -33,3 +33,5 @@ app.MapControllers();
 app.MapEndpoints();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.Run();
+
+public partial class Program;

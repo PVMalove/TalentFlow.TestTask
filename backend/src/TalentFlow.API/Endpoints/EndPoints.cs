@@ -22,7 +22,7 @@ internal sealed class EndPoints : IEndpoint
                 Result<Guid, ErrorList> result = await sender.Send(command, cancellationToken);
                 return result.EndpointMatchOk();
             });
-
+        
         app.MapGet("api/v1/endpoints/departments/",
             async ([AsParameters] GetSortedDepartmentsRequest request, ISender sender,
                 CancellationToken cancellationToken) =>

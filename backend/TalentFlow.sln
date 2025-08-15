@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{75516776
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.Domain.Tests", "tests\TalentFlow.Domain.Tests\TalentFlow.Domain.Tests.csproj", "{23A34524-B4A9-4621-94B8-55D92654543C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalentFlow.E2E", "tests\TalentFlow.E2E\TalentFlow.E2E\TalentFlow.E2E.csproj", "{F5189CAB-63A8-4C31-8B50-87664F8FF9FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,7 @@ Global
 		{126E97F8-C4BB-4812-B63C-15AA15093924} = {CED35C25-53B2-4480-91C0-B857706D7590}
 		{2B4344C7-D318-4008-953E-D7958CC7B2C4} = {CED35C25-53B2-4480-91C0-B857706D7590}
 		{23A34524-B4A9-4621-94B8-55D92654543C} = {75516776-A2D9-43CA-89BE-DCCFB0A97D16}
+		{F5189CAB-63A8-4C31-8B50-87664F8FF9FB} = {75516776-A2D9-43CA-89BE-DCCFB0A97D16}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3B5E1139-E6A7-4606-813E-11E25B338DF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -53,5 +56,9 @@ Global
 		{23A34524-B4A9-4621-94B8-55D92654543C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23A34524-B4A9-4621-94B8-55D92654543C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23A34524-B4A9-4621-94B8-55D92654543C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5189CAB-63A8-4C31-8B50-87664F8FF9FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5189CAB-63A8-4C31-8B50-87664F8FF9FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5189CAB-63A8-4C31-8B50-87664F8FF9FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5189CAB-63A8-4C31-8B50-87664F8FF9FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
