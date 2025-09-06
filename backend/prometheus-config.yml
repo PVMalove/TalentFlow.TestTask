@@ -1,0 +1,30 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Задача для сбора метрик с самого Prometheus
+  - job_name: 'talentFlow.prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Задача для сбора метрик с Loki
+  - job_name: 'talentFlow.loki'
+    static_configs:
+      - targets: ['talentFlow.loki:3100']
+
+  # Задача для сбора метрик с локального приложения
+  - job_name: 'local-dev'
+    scrape_interval: 15s
+    scrape_timeout: 15s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets:
+          - 'host.docker.internal:5154'  # ← Специальное DNS-имя для доступа к хосту
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: service
+        replacement: 'local-dev'
+      - source_labels: [__address__]
+        target_label: environment
+        replacement: 'local'

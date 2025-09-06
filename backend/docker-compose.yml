@@ -1,5 +1,5 @@
-﻿version: '3.9'
-
+﻿version: '3.8'
+name: TalentFlow-Backend
 networks:
   talentflow-net:
 
@@ -10,14 +10,90 @@ services:
     restart: always
     environment:
       ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: MyStrong!Pass123
-      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: ${MSSQL_PID:-Developer}
     volumes:
-      - talentflow-mssql:/var/opt/mssql
+      - mssql-data:/var/opt/mssql
     ports:
-      - 14333:1433
+      - "${MSSQL_PORT:-14333}:1433"
+    networks:
+      - talentflow-net
+
+  TalentFlow.minio:
+    container_name: 'talentFlow.minio' # Имя контейнера для MinIO
+    image: minio/minio:latest # Образ и версия MinIO
+    command: server /data --console-address ":${MINIO_CONSOLE_PORT:-9001}" # Команда для запуска сервера MinIO и его веб-интерфейса
+    ports:
+      - "${MINIO_PORT:-9000}:9000" # Проброс порта для API MinIO
+      - "${MINIO_CONSOLE_PORT:-9001}:9001" # Проброс порта для веб-интерфейса MinIO
+    volumes  :
+      - ./minio-data:/data # Монтирование локальной папки для хранения данных MinIO
+    env_file:
+      - .env # Подключение файла с переменными окружения
+    networks:
+      - talentflow-net
+
+  TalentFlow.loki:
+    container_name: 'talentFlow.loki' # Имя контейнера для Loki
+    image: grafana/loki:3.5.1 # Образ и версия Loki
+    ports:
+      - "${LOKI_PORT:-3100}:3100" # Проброс порта для Loki. Значение берется из .env, по умолчанию 3100
+    volumes:
+      - ./loki-data:/tmp/loki # Монтирование локальной папки для временных данных Loki
+      - ./loki-config.yml:/etc/loki/local-config.yml # Монтирование файла конфигурации Loki
+    command: 
+      -config.file=/etc/loki/local-config.yml
+      -config.expand-env=true # Команда для запуска Loki с указанием конфига и включением переменных окружения
+    env_file:
+      - .env # Подключение файла с переменными окружения
+    depends_on: # Указание зависимостей
+      - TalentFlow.minio # Loki запустится после успешного старта minio
+    networks:
+      - talentflow-net
+
+  TalentFlow.prometheus:
+    container_name: 'talentFlow.prometheus' # Имя контейнера для Prometheus
+    image: prom/prometheus:latest # Образ и версия Prometheus
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090" # Проброс порта для Prometheus
+    volumes:
+      - ./prometheus-data:/tmp/prometheus # Монтирование локальной папки для данных Prometheus
+      - ./prometheus-config.yml:/etc/prometheus/prometheus-config.yml # Монтирование файла конфигурации Prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus-config.yml' # Указание пути к файлу конфигурации
+      - '--storage.tsdb.path=/prometheus' # Указание пути для хранения данных временных рядов
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env # Подключение файла с переменными окружения
+    depends_on: # Зависимости
+      - TalentFlow.loki # Запустится после Loki
+    networks:
+      - talentflow-net
+
+  TalentFlow.grafana:
+    container_name: 'talentFlow.grafana' # Имя контейнера для Grafana
+    image: grafana/grafana:12.1.0 # Образ и версия Grafana
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000" # Проброс порта для Grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_DEFAULT_USER} # Установка логина администратора из .env
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_DEFAULT_PASSWORD} # Установка пароля администратора из .env
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource # Установка плагинов при старте
+    volumes:
+      - grafana-data:/var/lib/grafana # Использование именованного тома для данных Grafana
+    env_file:
+      - .env # Подключение файла с переменными окружения
+    depends_on: # Зависимости
+      - TalentFlow.loki # Запустится после Loki
+      - TalentFlow.prometheus # Запустится после Prometheus
     networks:
       - talentflow-net
 
 volumes:
-  talentflow-mssql:
+  mssql-data:
+  minio-data:
+  loki-data:
+  prometheus-data:
+  grafana-data:
+  tempo-data:

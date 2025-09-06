@@ -1,0 +1,70 @@
+﻿auth_enabled: false                # Отключает аутентификацию — доступ к Loki без авторизации
+
+server:
+  http_listen_port: 3100           # Порт, на котором Loki принимает HTTP-запросы (API, UI)
+  grpc_listen_port: 9096           # Порт для gRPC соединений между компонентами Loki
+
+common:
+  path_prefix: /tmp/loki           # Базовая директория для хранения данных и временных файлов
+  storage:
+    s3:                                                          # Используем S3-совместимое хранилище
+      endpoint: talentFlow.minio:${MINIO_PORT:-9000}             # Адрес нашего MinIO сервиса из docker-compose
+      bucketnames: ${MINIO_BUCKET_NAME_LOKI}                     # Название бакета, которое мы задали в .env
+      access_key_id: ${MINIO_ROOT_USER}                          # Логин для доступа к MinIO из .env
+      secret_access_key: ${MINIO_ROOT_PASSWORD}                  # Пароль для доступа к MinIO из .env
+      s3forcepathstyle: true                                     # Обязательно для работы с MinIO, использует формат "host/bucket"
+      insecure: true                                             # Отключает проверку SSL-сертификата (т.к. мы работаем в локальной сети Docker)
+  replication_factor: 1                                        # Количество копий данных (1 — без репликации)
+  ring:                                                        # Конфигурация кольца — механизма обнаружения и распределения нагрузки
+    instance_addr: 127.0.0.1                                   # IP-адрес текущего инстанса Loki
+    kvstore:
+      store: inmemory                                          # Хранение метаданных в оперативной памяти
+
+schema_config:
+  configs:                                                    # Настройки схемы хранения данных
+    - from: 2025-09-01                                        # Дата перехода на новую схему TSDB (установите актуальную дату)
+      store: tsdb                                             # Новый формат хранения индекса — TSDB
+      object_store: s3                                        # Хранилище объектов теперь S3 (MinIO)
+      schema: v13                                             # Версия схемы v13 для TSDB
+      index:
+        prefix: index_                                        # Префикс имени файлов индекса
+        period: 24h                                           # Период ротации индекса
+
+storage_config:                                            # Общие настройки хранилищ
+  tsdb_shipper:                                            # Конфигурация нового TSDB-shipper
+    active_index_directory: /tmp/loki/tsdb-index           # Папка для активных индексов TSDB (на локальном диске контейнера)
+    cache_location: /tmp/loki/tsdb-cache                   # Папка для кэша индексов TSDB (на локальном диске контейнера)
+    # Для версии 3.5.1 используется другой формат конфигурации TSDB
+    index_gateway_client:
+      server_address: dns:///index-gateway:9095
+
+compactor: # В версии 3.5.1 compactor использует настройки хранилища из common.storage
+  working_directory: /tmp/loki/compactor                   # Папка для временных файлов компактора  
+  compaction_interval: 10m                                 # Интервал компакции данных
+
+limits_config:                                            # Настройки лимитов
+  reject_old_samples: true                                # Отклонять слишком старые записи
+  reject_old_samples_max_age: 24h                         # Максимальный возраст принимаемых данных — 24 часа
+  allow_structured_metadata: true                         # Разрешить структурированные метаданные для TSDB
+
+table_manager:                                               # Настройки для компонента table manager, который управляет жизненным циклом данных.
+  retention_deletes_enabled: false                           # Не удалять старые данные автоматически
+  retention_period: 0s                                       # Период хранения данных (0s — без ограничения)
+
+ruler:                                                       # Настройки для компонента ruler
+  storage:
+    type: local                                              # Хранение правил локально
+    local:
+      directory: /tmp/loki/rules                             # Папка для правил
+  rule_path: /tmp/loki/rules-temp                            # Временная папка для правил
+  ring:
+    kvstore:
+      store: inmemory                                        # Хранение метаданных кольца в памяти
+  enable_api: true                                           # Включить API для управления правилами
+
+# Оптимизации для TSDB
+query_scheduler:
+  max_outstanding_requests_per_tenant: 32768                 # Увеличиваем размер очереди запросов для TSDB
+
+querier:
+  max_concurrent: 16                                         # Количество параллельных воркеров для обработки запросов
